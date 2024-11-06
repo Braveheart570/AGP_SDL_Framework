@@ -72,10 +72,11 @@ int main(int argc, char* args[])
 
 
     }
-
+    // destroy th renderer first, reverse order of creation.
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
-    SDL_DestroyRenderer(renderer);
+    
 
     //terminate SDL subsystems
     SDL_Quit();
