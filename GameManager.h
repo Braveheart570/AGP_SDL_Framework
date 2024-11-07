@@ -1,5 +1,6 @@
 #pragma once
 #include "Graphics.h"
+#include "Timer.h"
 
 namespace SDLFramework {
 
@@ -24,6 +25,7 @@ namespace SDLFramework {
 
 
 	private:
+		const int FRAME_RATE = 60;
 		// this is how we are creating this as a singleton
 		static GameManager* sInstance;
 		//loop cotrol
@@ -31,6 +33,7 @@ namespace SDLFramework {
 
 		//modules
 		Graphics* mGraphics;
+		Timer* mTimer;
 
 		SDL_Event mEvents;
 	};

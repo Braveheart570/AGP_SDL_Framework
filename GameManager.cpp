@@ -23,6 +23,9 @@ namespace SDLFramework {
 	void GameManager::Run() {
 		//main game loops
 		while (!mQuit) {
+
+			mTimer->Update();
+
 			// while there are events inside of events variable.
 			while (SDL_PollEvent(&mEvents)) {
 				switch (mEvents.type) {
@@ -32,11 +35,17 @@ namespace SDLFramework {
 				}
 			}
 
-			//update code
-			Update();
-			LateUpdate();
-			//render code
-			Render();
+			// frame rate independence
+			if (mTimer->DeltaTime() >= 1.0f / FRAME_RATE) {
+				
+				mTimer->Reset();
+				Update();
+				LateUpdate();
+				Render();
+
+			}
+
+			
 
 
 
@@ -45,6 +54,8 @@ namespace SDLFramework {
 
 
 	void GameManager::Update() {
+
+		std::cout << "Delta Time: " << mTimer->DeltaTime() << std::endl;
 
 	}
 
@@ -65,12 +76,18 @@ namespace SDLFramework {
 			mQuit = true;
 		}
 
+
+		mTimer = Timer::Instance();
+
 	}
 
 	GameManager::~GameManager() {
 		//release modules
 		Graphics::Release();
 		mGraphics = nullptr;
+
+		Timer::Release();
+		mTimer = nullptr;
 
 		//quit sdl subsystems
 		SDL_Quit();
