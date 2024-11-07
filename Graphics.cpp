@@ -38,4 +38,58 @@ namespace SDLFramework {
 		SDL_RenderPresent(mRenderer);
 	}
 
+	Graphics::Graphics() : mRenderer(nullptr) {
+		sInitialized = Init();
+	}
+
+
+	Graphics::~Graphics(){
+		// destroy th renderer first, reverse order of creation.
+		SDL_DestroyRenderer(mRenderer);
+		SDL_DestroyWindow(mWindow);
+	}
+
+	bool Graphics::Init() {
+
+		//initialize SDL subsystems
+		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
+			//failed to initialize
+			std::cerr << "SDL could not init video: " << SDL_GetError() << std::endl;
+			return -1;
+		}
+		else {
+			std::cout << "video init sucessfull" << std::endl;
+		}
+
+		//Draw a Window
+		mWindow = SDL_CreateWindow(
+			"Test Window",
+			SDL_WINDOWPOS_UNDEFINED,
+			SDL_WINDOWPOS_UNDEFINED,
+			SCREEN_WIDTH,
+			SCREEN_HEIGHT,
+			SDL_WINDOW_SHOWN
+		);
+
+		if (mWindow == nullptr) {
+			std::cerr << "unable to create a window! SDL_Error: " << SDL_GetError() << std::endl;
+			return false;
+		}
+
+
+
+		// index -1 will find the first available rendering driver
+		mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
+
+		if (mRenderer == nullptr) {
+			std::cerr << "unable to create a renderer! SDL_Error: " << SDL_GetError() << std::endl;
+			return false;
+		}
+
+
+		return true;
+
+	}
+
+
 }
