@@ -1,6 +1,8 @@
 #pragma once
 #include <SDL.h>
+#include <SDL_image.h>
 #include <iostream>
+#include <string>
 
 namespace SDLFramework {
 	//singleton
@@ -14,9 +16,17 @@ namespace SDLFramework {
 
 		//handle releaseing/ uninitializing/ dealocating memory.
 		static void Release();
-
 		static bool Initialized();
 
+		SDL_Texture* LoadTexture(std::string path);
+
+		void DrawTexture(
+			SDL_Texture* texture, 
+			SDL_Rect* srcRect = nullptr, 
+			SDL_Rect* dstRect = nullptr, 
+			float angle = 0.0f, 
+			SDL_RendererFlip flip = SDL_FLIP_NONE
+		);
 
 		void ClearBackBuffer();
 

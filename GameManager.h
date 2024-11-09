@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphics.h"
 #include "Timer.h"
+#include "GameEntity.h"
 
 namespace SDLFramework {
 

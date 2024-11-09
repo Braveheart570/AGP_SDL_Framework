@@ -26,6 +26,34 @@ namespace SDLFramework {
 		sInitialized = false;
 	}
 
+
+	SDL_Texture* Graphics::LoadTexture(std::string path) {
+
+		SDL_Texture* tex = nullptr;
+
+		SDL_Surface* surface = IMG_Load(path.c_str());
+
+		if (surface == nullptr) {
+			std::cerr << "Unable to load " << path << ". IMG Error: " << IMG_GetError() << std::endl;
+			return nullptr;
+		}
+
+		tex = SDL_CreateTextureFromSurface(mRenderer, surface);
+		SDL_FreeSurface(surface);
+
+		if (tex == nullptr) {
+			std::cerr << "Unable to create texture from surface. IMG Error: " << IMG_GetError() << std::endl;
+			return nullptr;
+		}
+		
+		return tex;
+	}
+
+	void Graphics::DrawTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect, float angle, SDL_RendererFlip flip) {
+		
+	}
+
+
 	bool Graphics::Initialized() {
 		return sInitialized;
 	}
