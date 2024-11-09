@@ -73,7 +73,7 @@ namespace SDLFramework {
 
 	}
 
-	inline Vector2 RotateVector(const Vector2& vec, float& angle) {
+	inline Vector2 RotateVector(const Vector2& vec, float angle) {
 		//convert degrees to radians
 		float radAngle = (float)(angle * DEG_TO_RAD);
 

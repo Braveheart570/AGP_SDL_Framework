@@ -22,7 +22,7 @@ namespace SDLFramework {
 		Vector2 Scale(Space space = WORLD);
 
 		void Active(bool active);
-		bool Active();
+		bool Active() const;
 
 		void Parent(GameEntity* parent);
 		GameEntity* Parent();
