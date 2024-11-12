@@ -54,7 +54,7 @@ namespace SDLFramework {
 	}
 
 
-	void AssetManager::DestryTexture(SDL_Texture* texture) {
+	void AssetManager::DestroyTexture(SDL_Texture* texture) {
 		std::map<SDL_Texture*, unsigned int>::iterator it = mTextureRefCount.find(texture);
 
 		if (it != mTextureRefCount.end()) {

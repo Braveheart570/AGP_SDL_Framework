@@ -5,6 +5,10 @@ namespace SDLFramework {
 
 	GameEntity::GameEntity(float x, float y) {
 		mPosition = Vector2(x, y);
+		mScale = Vect2_One;
+		mRotation = 0;
+		mActive = true;
+		mParent = nullptr;
 	}
 
 	GameEntity::~GameEntity() {

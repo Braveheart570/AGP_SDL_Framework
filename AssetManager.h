@@ -8,11 +8,11 @@ namespace SDLFramework {
 
 	public:
 
-		AssetManager* Instance();
-		void Release();
+		static AssetManager* Instance();
+		static void Release();
 
 		SDL_Texture* GetTexture(std::string fileName, bool managed = false);
-		void DestryTexture(SDL_Texture* texture);
+		void DestroyTexture(SDL_Texture* texture);
 
 		
 

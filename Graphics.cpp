@@ -50,7 +50,7 @@ namespace SDLFramework {
 	}
 
 	void Graphics::DrawTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* dstRect, float angle, SDL_RendererFlip flip) {
-		
+		SDL_RenderCopyEx(mRenderer,texture,srcRect,dstRect,angle,nullptr,flip);
 	}
 
 
