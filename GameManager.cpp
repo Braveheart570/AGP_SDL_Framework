@@ -85,9 +85,8 @@ namespace SDLFramework {
 
 
 		mTimer = Timer::Instance();
-
-
 		mAssetManager = AssetManager::Instance();
+		mInputManager = InputManager::Instance();
 
 
 		mTex = new Texture("SpriteSheet.png",160,55,16,16);
