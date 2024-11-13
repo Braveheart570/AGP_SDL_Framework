@@ -85,7 +85,39 @@ namespace SDLFramework {
 			mTex->Scale(mTex->Scale()+= Vector2(1, 1));
 		}
 
+
 		
+
+		if (mInputManager->KeyDown(SDL_SCANCODE_I)) {
+			mTex2->Translate(Vect2_Up * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_K)) {
+			mTex2->Translate(Vect2_Up * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+		}
+
+		if (mInputManager->KeyDown(SDL_SCANCODE_J)) {
+			mTex2->Translate(Vect2_Right * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_L)) {
+			mTex2->Translate(Vect2_Right * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+		}
+
+		if (mInputManager->KeyDown(SDL_SCANCODE_U)) {
+			mTex2->Rotate(-2);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_O)) {
+			mTex2->Rotate(2);
+		}
+
+		if (mInputManager->KeyDown(SDL_SCANCODE_N)) {
+			mTex2->Scale(mTex2->Scale() -= Vector2(1, 1));
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_M)) {
+			mTex2->Scale(mTex2->Scale() += Vector2(1, 1));
+		}
+
+
+
 
 
 		if (mInputManager->KeyPressed(SDL_SCANCODE_SPACE)) {
@@ -115,6 +147,7 @@ namespace SDLFramework {
 		mGraphics->ClearBackBuffer();
 
 		mTex->Render();
+		mTex2->Render();
 
 		//draw to screem
 		mGraphics->Render();
@@ -138,6 +171,10 @@ namespace SDLFramework {
 		mTex->Scale(Vector2(3,3));
 		mTex->Position(Graphics::SCREEN_WIDTH * 0.4f, Graphics::SCREEN_HEIGHT * 0.5f);
 
+		mTex2 = new Texture("SpriteSheet.png", 160, 79, 16, 16);
+		mTex2->Scale(Vector2(3, 3));
+		mTex2->Position(Graphics::SCREEN_WIDTH * 0.6f, Graphics::SCREEN_HEIGHT * 0.5f);
+
 
 	}
 
@@ -158,6 +195,8 @@ namespace SDLFramework {
 		delete mTex;
 		mTex = nullptr;
 
+		delete mTex2;
+		mTex2 = nullptr;
 
 		//quit sdl subsystems
 		SDL_Quit();

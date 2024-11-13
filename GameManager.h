@@ -46,6 +46,7 @@ namespace SDLFramework {
 
 		//sanaty testing
 		Texture* mTex;
+		Texture* mTex2;
 	};
 
 }
