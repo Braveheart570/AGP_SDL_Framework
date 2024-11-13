@@ -27,6 +27,9 @@ namespace SDLFramework {
 		void Parent(GameEntity* parent);
 		GameEntity* Parent();
 
+		void Translate(Vector2 vec, Space space = LOCAL);
+		void Rotate(float amount);
+
 		virtual void Update() {};
 		virtual void Render() {};
 

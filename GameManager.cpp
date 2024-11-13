@@ -55,12 +55,35 @@ namespace SDLFramework {
 
 	void GameManager::Update() {
 
-		std::cout << "Delta Time: " << mTimer->DeltaTime() << std::endl;
+		mInputManager->Update();
+
+		if (mInputManager->KeyDown(SDL_SCANCODE_W)) {
+			mTex->Translate(Vector2(0, -40.0f) * mTimer->DeltaTime(), GameEntity::WORLD);
+		}
+		else if(mInputManager->KeyDown(SDL_SCANCODE_S)){
+			mTex->Translate(Vector2(0, 40.0f) * mTimer->DeltaTime(), GameEntity::WORLD);
+		}
+
+		if (mInputManager->KeyPressed(SDL_SCANCODE_SPACE)) {
+			std::cout << "Space Pressed!" << std::endl;
+		}
+		if (mInputManager->keyReleased(SDL_SCANCODE_SPACE)) {
+			std::cout << "Space Released!" << std::endl;
+		}
+
+		if (mInputManager->MouseButtonPressed(InputManager::Left)) {
+			std::cout << "LMB Pressed!" << std::endl;
+		}
+		if (mInputManager->MouseButtonReleased(InputManager::Left)) {
+			std::cout << "LMB Released!" << std::endl;
+		}
+
+
 
 	}
 
 	void GameManager::LateUpdate() {
-
+		mInputManager->updatePreviewInput();
 	}
 
 	void GameManager::Render() {
@@ -68,8 +91,6 @@ namespace SDLFramework {
 		mGraphics->ClearBackBuffer();
 
 		mTex->Render();
-		mTex2->Render();
-		mTex3->Render();
 
 		//draw to screem
 		mGraphics->Render();
@@ -93,14 +114,6 @@ namespace SDLFramework {
 		mTex->Scale(Vector2(3,3));
 		mTex->Position(Graphics::SCREEN_WIDTH * 0.4f, Graphics::SCREEN_HEIGHT * 0.5f);
 
-		mTex2 = new Texture("SpriteSheet.png", 160, 79, 16, 16);
-		mTex2->Scale(Vector2(3, 3));
-		mTex2->Position(Graphics::SCREEN_WIDTH * 0.6f, Graphics::SCREEN_HEIGHT * 0.5f);
-
-		mTex3 = new Texture("SpriteSheet.png", 161, 319, 13, 16);
-		mTex3->Scale(Vector2(3, 3));
-		mTex3->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.6f);
-
 
 	}
 
@@ -115,14 +128,11 @@ namespace SDLFramework {
 		AssetManager::Release();
 		mAssetManager = nullptr;
 
+		InputManager::Release();
+		mInputManager = nullptr;
+
 		delete mTex;
 		mTex = nullptr;
-
-		delete mTex2;
-		mTex2 = nullptr;
-
-		delete mTex3;
-		mTex3 = nullptr;
 
 
 		//quit sdl subsystems
