@@ -20,7 +20,7 @@ namespace SDLFramework {
 
 		void Render() override;
 
-	private:
+	protected:
 		SDL_Texture* mTex;
 		Graphics* mGraphics;
 

@@ -79,10 +79,10 @@ namespace SDLFramework {
 		}
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_Z)) {
-			mTex->Scale(mTex->Scale()-=Vector2(1,1));
+			mTex->Scale(mTex->Scale()-= Vect2_One);
 		}
 		else if (mInputManager->KeyDown(SDL_SCANCODE_C)) {
-			mTex->Scale(mTex->Scale()+= Vector2(1, 1));
+			mTex->Scale(mTex->Scale()+= Vect2_One);
 		}
 
 
@@ -110,10 +110,10 @@ namespace SDLFramework {
 		}
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_N)) {
-			mTex2->Scale(mTex2->Scale() -= Vector2(1, 1));
+			mTex2->Scale(mTex2->Scale() -= Vect2_One);
 		}
 		else if (mInputManager->KeyDown(SDL_SCANCODE_M)) {
-			mTex2->Scale(mTex2->Scale() += Vector2(1, 1));
+			mTex2->Scale(mTex2->Scale() += Vect2_One);
 		}
 
 
