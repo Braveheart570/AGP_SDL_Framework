@@ -58,11 +58,35 @@ namespace SDLFramework {
 		mInputManager->Update();
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_W)) {
-			mTex->Translate(Vector2(0, -40.0f) * mTimer->DeltaTime(), GameEntity::WORLD);
+			mTex->Translate(Vect2_Up * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
 		}
 		else if(mInputManager->KeyDown(SDL_SCANCODE_S)){
-			mTex->Translate(Vector2(0, 40.0f) * mTimer->DeltaTime(), GameEntity::WORLD);
+			mTex->Translate(Vect2_Up * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
 		}
+
+		if (mInputManager->KeyDown(SDL_SCANCODE_A)) {
+			mTex->Translate(Vect2_Right * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_D)) {
+			mTex->Translate(Vect2_Right * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+		}
+		
+		if (mInputManager->KeyDown(SDL_SCANCODE_Q)) {
+			mTex->Rotate(-2);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_E)) {
+			mTex->Rotate(2);
+		}
+
+		if (mInputManager->KeyDown(SDL_SCANCODE_Z)) {
+			mTex->Scale(mTex->Scale()-=Vector2(1,1));
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_C)) {
+			mTex->Scale(mTex->Scale()+= Vector2(1, 1));
+		}
+
+		
+
 
 		if (mInputManager->KeyPressed(SDL_SCANCODE_SPACE)) {
 			std::cout << "Space Pressed!" << std::endl;
