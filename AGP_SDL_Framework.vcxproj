@@ -143,6 +143,7 @@ xcopy "$(ProjectDir)\Assets\*" "$(OutDir)Assets\" /y /s</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AGP_SDL_Framework.cpp" />
+    <ClCompile Include="AnimatedTexture.cpp" />
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameManager.cpp" />

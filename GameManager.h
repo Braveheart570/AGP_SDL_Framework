@@ -1,8 +1,6 @@
 #pragma once
 #include "Graphics.h"
-#include "Timer.h"
-#include "GameEntity.h"
-#include "Texture.h"
+#include "AnimatedTexture.h"
 #include "InputManager.h"
 
 namespace SDLFramework {

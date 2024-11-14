@@ -57,6 +57,9 @@ namespace SDLFramework {
 
 		mInputManager->Update();
 
+		mTex2->Update();
+
+
 		if (mInputManager->KeyDown(SDL_SCANCODE_W)) {
 			mTex->Translate(Vect2_Up * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
 		}
@@ -171,7 +174,7 @@ namespace SDLFramework {
 		mTex->Scale(Vector2(3,3));
 		mTex->Position(Graphics::SCREEN_WIDTH * 0.4f, Graphics::SCREEN_HEIGHT * 0.5f);
 
-		mTex2 = new Texture("SpriteSheet.png", 160, 79, 16, 16);
+		mTex2 = new AnimatedTexture("SpriteSheet.png", 204, 45, 40, 38, 4, 1,AnimatedTexture::Horizontal);
 		mTex2->Scale(Vector2(3, 3));
 		mTex2->Position(Graphics::SCREEN_WIDTH * 0.6f, Graphics::SCREEN_HEIGHT * 0.5f);
 
