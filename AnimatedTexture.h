@@ -9,11 +9,22 @@ namespace SDLFramework {
 		enum WrapMode { Once = 0, loop };
 		enum AnimDir{Horizontal = 0, Vertical};
 
-		AnimatedTexture(std::string filename, int x, int y, int width, int height, int frameCount, float animatedSpeed, float AnimDir, float AnimationDir, bool managed = false);
+		AnimatedTexture(std::string filename, int x, int y, int width, int height, int frameCount, float animatedSpeed, AnimDir AnimationDir, bool managed = false);
 		~AnimatedTexture();
 
+		void SetWrapMode(WrapMode mode);
 
-	private:
+		bool IsAnimating();
+
+		virtual void ResetAnimation();
+
+		void Update();
+
+
+	protected:
+
+		virtual void RunAnimation();
+
 		Timer* mTimer;
 		int mStartX;
 		int mStartY;
