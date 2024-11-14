@@ -79,10 +79,10 @@ namespace SDLFramework {
 		}
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_Z)) {
-			mTex->Scale(mTex->Scale()-= Vect2_One);
+			mTex->Scale(mTex->Scale()-= Vect2_One * 80 * mTimer->DeltaTime());
 		}
 		else if (mInputManager->KeyDown(SDL_SCANCODE_C)) {
-			mTex->Scale(mTex->Scale()+= Vect2_One);
+			mTex->Scale(mTex->Scale()+= Vect2_One * 80 * mTimer->DeltaTime());
 		}
 
 
@@ -103,17 +103,17 @@ namespace SDLFramework {
 		}
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_U)) {
-			mTex2->Rotate(-2);
+			mTex2->Rotate(-80 * mTimer->DeltaTime());
 		}
 		else if (mInputManager->KeyDown(SDL_SCANCODE_O)) {
-			mTex2->Rotate(2);
+			mTex2->Rotate(80 * mTimer->DeltaTime());
 		}
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_N)) {
-			mTex2->Scale(mTex2->Scale() -= Vect2_One);
+			mTex2->Scale(mTex2->Scale() -= Vect2_One * 80 * mTimer->DeltaTime());
 		}
 		else if (mInputManager->KeyDown(SDL_SCANCODE_M)) {
-			mTex2->Scale(mTex2->Scale() += Vect2_One);
+			mTex2->Scale(mTex2->Scale() += Vect2_One * 80 * mTimer->DeltaTime());
 		}
 
 
