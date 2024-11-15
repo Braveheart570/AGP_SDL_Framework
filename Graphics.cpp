@@ -54,6 +54,30 @@ namespace SDLFramework {
 	}
 
 
+	SDL_Texture* Graphics::CreateTextTexture(TTF_Font* font, std::string text, SDL_Color color) {
+
+		SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
+
+		if (surface == nullptr) {
+			std::cerr << "CreateTexTexture:: TTF_RenderText_Solid Error: " << SDL_GetError() << std::endl;
+			return nullptr;
+		}
+
+		SDL_Texture* tex = SDL_CreateTextureFromSurface(mRenderer, surface);
+
+		if (tex == nullptr) {
+			std::cout << "CreateTexTexture:: SDL_CreateTextureSurface Error: " << SDL_GetError() << std::endl;
+			return nullptr;
+		}
+
+		SDL_FreeSurface(surface);
+
+		return tex;
+
+	}
+
+
+
 	bool Graphics::Initialized() {
 		return sInitialized;
 	}
@@ -86,7 +110,7 @@ namespace SDLFramework {
 			return -1;
 		}
 		else {
-			std::cout << "video init sucessfull" << std::endl;
+			std::cout << "Video init sucessfull" << std::endl;
 		}
 
 		//Draw a Window
@@ -104,13 +128,16 @@ namespace SDLFramework {
 			return false;
 		}
 
-
-
 		// index -1 will find the first available rendering driver
 		mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
 
 		if (mRenderer == nullptr) {
 			std::cerr << "unable to create a renderer! SDL_Error: " << SDL_GetError() << std::endl;
+			return false;
+		}
+
+		if (TTF_Init() == -1) {
+			std::cerr << "unable to Initialize SDL_TTF! TTF_Error: " << TTF_GetError() << std::endl;
 			return false;
 		}
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <string>
 
@@ -27,6 +28,8 @@ namespace SDLFramework {
 			float angle = 0.0f, 
 			SDL_RendererFlip flip = SDL_FLIP_NONE
 		);
+
+		SDL_Texture* CreateTextTexture(TTF_Font* font, std::string text, SDL_Color color);
 
 		void ClearBackBuffer();
 

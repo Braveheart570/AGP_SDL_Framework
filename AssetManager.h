@@ -1,5 +1,6 @@
 #pragma once
 #include "Graphics.h"
+#include <sstream>
 #include<map>
 
 namespace SDLFramework {
@@ -12,6 +13,9 @@ namespace SDLFramework {
 		static void Release();
 
 		SDL_Texture* GetTexture(std::string fileName, bool managed = false);
+
+		SDL_Texture* GetText(std::string text, std::string fileName, int size, SDL_Color color, bool managed = false);
+
 		void DestroyTexture(SDL_Texture* texture);
 
 		
@@ -23,12 +27,21 @@ namespace SDLFramework {
 
 		void UnloadTexture(SDL_Texture* texture);
 
+		TTF_Font* GetFont(std::string fileName, int size);
+
+
+
 		static AssetManager* sInstance;
 
 		// map texture to there path strings
 		std::map<std::string, SDL_Texture*> mTextures;
+
+		std::map<std::string, TTF_Font*> mFonts;
+
 		// how many times is a texture being referenced.
 		std::map<SDL_Texture*, unsigned int> mTextureRefCount;
+
+		
 
 	};
 }

@@ -151,6 +151,7 @@ namespace SDLFramework {
 
 		mTex->Render();
 		mTex2->Render();
+		mFontText->Render();
 
 		//draw to screem
 		mGraphics->Render();
@@ -178,6 +179,9 @@ namespace SDLFramework {
 		mTex2->Scale(Vector2(3, 3));
 		mTex2->Position(Graphics::SCREEN_WIDTH * 0.6f, Graphics::SCREEN_HEIGHT * 0.5f);
 
+		mFontText = new Texture("Galaga", "ARCADE.TTF", 72, {225,255,255});
+		mFontText->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.15f);
+
 
 	}
 
@@ -200,6 +204,9 @@ namespace SDLFramework {
 
 		delete mTex2;
 		mTex2 = nullptr;
+
+		delete mFontText;
+		mFontText = nullptr;
 
 		//quit sdl subsystems
 		SDL_Quit();

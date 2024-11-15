@@ -10,6 +10,9 @@ namespace SDLFramework {
 	public:
 		Texture(std::string filename, bool managed = false);
 		Texture(std::string filename,int x, int y, int width, int height, bool managed = false);
+		// for text textures
+		Texture(std::string text, std::string fontPath, int size, SDL_Color color, bool managed = false);
+
 		~Texture();
 
 		Vector2 ScaledDimensions();
