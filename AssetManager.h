@@ -1,4 +1,5 @@
 #pragma once
+#include <SDL_Mixer.h>
 #include "Graphics.h"
 #include <sstream>
 #include<map>
@@ -12,11 +13,20 @@ namespace SDLFramework {
 		static AssetManager* Instance();
 		static void Release();
 
-		SDL_Texture* GetTexture(std::string fileName, bool managed = false);
 
+
+		SDL_Texture* GetTexture(std::string fileName, bool managed = false);
 		SDL_Texture* GetText(std::string text, std::string fileName, int size, SDL_Color color, bool managed = false);
 
+		Mix_Music* GetMusic(std::string fileName, bool managed = false);
+		Mix_Chunk* GetSFX(std::string fileName, bool managed = false);
+
+
+
 		void DestroyTexture(SDL_Texture* texture);
+
+		void DestroyMusic(Mix_Music* music);
+		void DestroySFX(Mix_Chunk* sfx);
 
 		
 
@@ -26,6 +36,10 @@ namespace SDLFramework {
 		~AssetManager();
 
 		void UnloadTexture(SDL_Texture* texture);
+
+		void UnloadMusic(Mix_Music* music);
+		void UnloadSFX(Mix_Chunk* sfx);
+
 
 		TTF_Font* GetFont(std::string fileName, int size);
 
@@ -41,7 +55,12 @@ namespace SDLFramework {
 		// how many times is a texture being referenced.
 		std::map<SDL_Texture*, unsigned int> mTextureRefCount;
 
+
+		std::map<std::string, Mix_Music*> mMusic;
+		std::map<std::string, Mix_Chunk*> mSFX;
 		
+		std::map<Mix_Music*, unsigned int> mMusicRefCount;
+		std::map<Mix_Chunk*, unsigned int> mSFXRefCount;
 
 	};
 }

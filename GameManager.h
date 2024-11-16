@@ -2,6 +2,7 @@
 #include "Graphics.h"
 #include "AnimatedTexture.h"
 #include "InputManager.h"
+#include "AudioManager.h"
 
 namespace SDLFramework {
 
@@ -37,6 +38,7 @@ namespace SDLFramework {
 		Timer* mTimer;
 		AssetManager* mAssetManager;
 		InputManager* mInputManager;
+		AudioManager* mAudioManager;
 
 
 		SDL_Event mEvents;

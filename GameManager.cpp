@@ -125,6 +125,7 @@ namespace SDLFramework {
 
 		if (mInputManager->KeyPressed(SDL_SCANCODE_SPACE)) {
 			std::cout << "Space Pressed!" << std::endl;
+			mAudioManager->PlaySFX("coin_credit.wav");
 		}
 		if (mInputManager->keyReleased(SDL_SCANCODE_SPACE)) {
 			std::cout << "Space Released!" << std::endl;
@@ -169,6 +170,7 @@ namespace SDLFramework {
 		mTimer = Timer::Instance();
 		mAssetManager = AssetManager::Instance();
 		mInputManager = InputManager::Instance();
+		mAudioManager = AudioManager::Instance();
 
 
 		mTex = new Texture("SpriteSheet.png",160,55,16,16);
@@ -198,6 +200,9 @@ namespace SDLFramework {
 
 		InputManager::Release();
 		mInputManager = nullptr;
+
+		AudioManager::Release();
+		mAudioManager = nullptr;
 
 		delete mTex;
 		mTex = nullptr;

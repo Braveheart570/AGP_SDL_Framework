@@ -102,6 +102,58 @@ namespace SDLFramework {
 	}
 
 
+	Mix_Music* AssetManager::GetMusic(std::string fileName, bool managed) {
+
+		std::string fullpath = SDL_GetBasePath();
+		fullpath.append("Assets/" + fileName);
+
+		if (mMusic[fullpath] == nullptr) {
+			mMusic[fullpath] = Mix_LoadMUS(fullpath.c_str());
+		}
+
+		if (mMusic[fullpath] == nullptr) {
+
+			std::cerr << "Unabe to load music " << fileName << "! Mix error: " << Mix_GetError() << std::endl;
+			return nullptr;
+
+		}
+		else if (managed) {
+
+			mMusicRefCount[mMusic[fullpath]] += 1;
+
+		}
+
+		return mMusic[fullpath];
+
+
+
+	}
+
+	Mix_Chunk* AssetManager::GetSFX(std::string fileName, bool managed) {
+
+		std::string fullpath = SDL_GetBasePath();
+		fullpath.append("Assets/" + fileName);
+
+		if (mSFX[fullpath] == nullptr) {
+			mSFX[fullpath] = Mix_LoadWAV(fullpath.c_str());
+		}
+
+		if (mSFX[fullpath] == nullptr) {
+
+			std::cerr << "Unabe to load SFX " << fileName << "! Mix error: " << Mix_GetError() << std::endl;
+			return nullptr;
+
+		}
+		else if (managed) {
+
+			mSFXRefCount[mSFX[fullpath]] += 1;
+
+		}
+
+		return mSFX[fullpath];
+
+	}
+
 
 	void AssetManager::DestroyTexture(SDL_Texture* texture) {
 		std::map<SDL_Texture*, unsigned int>::iterator it = mTextureRefCount.find(texture);
@@ -142,6 +194,92 @@ namespace SDLFramework {
 
 	}
 
+	void AssetManager::DestroyMusic(Mix_Music* music) {
+
+		std::map<Mix_Music*, unsigned int>::iterator it = mMusicRefCount.find(music);
+
+		if (it != mMusicRefCount.end()) {
+			it->second -= 1;
+
+			if (it->second == 0) {
+				UnloadMusic(it->first);
+				mMusicRefCount.erase(it->first);
+			}
+
+		}
+		else {
+			UnloadMusic(music);
+		}
+
+	}
+
+	void AssetManager::UnloadMusic(Mix_Music* music) {
+
+		bool found = false;
+		std::string key;
+		std::map<std::string, Mix_Music*>::iterator it;
+
+		for (it = mMusic.begin(); it != mMusic.end() && !found; it++) {
+
+			if ((found = it->second == music)) {
+
+				Mix_FreeMusic(it->second);
+				key = it->first;
+
+			}
+
+		}
+
+		if (found) {
+			mMusic.erase(key);
+		}
+
+	}
+
+
+
+	void AssetManager::DestroySFX(Mix_Chunk* sfx) {
+
+		std::map<Mix_Chunk*, unsigned int>::iterator it = mSFXRefCount.find(sfx);
+
+		if (it != mSFXRefCount.end()) {
+
+			it->second - 1;
+			if (it->second ==0) {
+				UnloadSFX(it->first);
+				mSFXRefCount.erase(it->first);
+			}
+
+		}
+		else {
+			UnloadSFX(sfx);
+		}
+
+	}
+
+
+	void AssetManager::UnloadSFX(Mix_Chunk* sfx) {
+
+		bool found = false;
+		std::string key;
+		std::map<std::string, Mix_Chunk*>::iterator it;
+
+		for (it = mSFX.begin(); it != mSFX.end() && !found; it++) {
+
+			if ((found = it->second == sfx)) {
+
+				Mix_FreeChunk(it->second);
+				key = it->first;
+
+			}
+
+		}
+
+		if (found) {
+			mSFX.erase(key);
+		}
+
+	}
 
 
 }
