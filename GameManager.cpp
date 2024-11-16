@@ -126,9 +126,11 @@ namespace SDLFramework {
 		if (mInputManager->KeyPressed(SDL_SCANCODE_SPACE)) {
 			std::cout << "Space Pressed!" << std::endl;
 			mAudioManager->PlaySFX("coin_credit.wav");
+			mAudioManager->PauseMusic();
 		}
 		if (mInputManager->keyReleased(SDL_SCANCODE_SPACE)) {
 			std::cout << "Space Released!" << std::endl;
+			mAudioManager->ResumeMusic();
 		}
 
 		if (mInputManager->MouseButtonPressed(InputManager::Left)) {
@@ -185,6 +187,7 @@ namespace SDLFramework {
 		mFontText->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.15f);
 
 
+		mAudioManager->PlayMusic("Map.wav");
 	}
 
 	GameManager::~GameManager() {
