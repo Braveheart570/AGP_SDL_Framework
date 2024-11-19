@@ -11,6 +11,14 @@ namespace SDLFramework {
 		mParent = nullptr;
 	}
 
+	GameEntity::GameEntity(const Vector2& pos) {
+		mPosition = pos;
+		mScale = Vect2_One;
+		mRotation = 0;
+		mActive = true;
+		mParent = nullptr;
+	}
+
 	GameEntity::~GameEntity() {
 		mParent = nullptr;
 	}
