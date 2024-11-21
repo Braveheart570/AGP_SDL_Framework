@@ -1,4 +1,6 @@
 #include "GameManager.h"
+//TODO remove
+#include "boxcollider.h"
 
 namespace SDLFramework {
 
@@ -92,31 +94,31 @@ namespace SDLFramework {
 		
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_I)) {
-			mTex2->Translate(Vect2_Up * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+			mPhys2->Translate(Vect2_Up * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
 		}
 		else if (mInputManager->KeyDown(SDL_SCANCODE_K)) {
-			mTex2->Translate(Vect2_Up * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+			mPhys2->Translate(Vect2_Up * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
 		}
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_J)) {
-			mTex2->Translate(Vect2_Right * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+			mPhys2->Translate(Vect2_Right * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
 		}
 		else if (mInputManager->KeyDown(SDL_SCANCODE_L)) {
-			mTex2->Translate(Vect2_Right * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+			mPhys2->Translate(Vect2_Right * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
 		}
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_U)) {
-			mTex2->Rotate(-80 * mTimer->DeltaTime());
+			mPhys2->Rotate(-80 * mTimer->DeltaTime());
 		}
 		else if (mInputManager->KeyDown(SDL_SCANCODE_O)) {
-			mTex2->Rotate(80 * mTimer->DeltaTime());
+			mPhys2->Rotate(80 * mTimer->DeltaTime());
 		}
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_N)) {
-			mTex2->Scale(mTex2->Scale() -= Vect2_One * 80 * mTimer->DeltaTime());
+			mPhys2->Scale(mTex2->Scale() -= Vect2_One * 80 * mTimer->DeltaTime());
 		}
 		else if (mInputManager->KeyDown(SDL_SCANCODE_M)) {
-			mTex2->Scale(mTex2->Scale() += Vect2_One * 80 * mTimer->DeltaTime());
+			mPhys2->Scale(mTex2->Scale() += Vect2_One * 80 * mTimer->DeltaTime());
 		}
 
 
@@ -145,16 +147,20 @@ namespace SDLFramework {
 	}
 
 	void GameManager::LateUpdate() {
+		mPhysicsManager->Update();
 		mInputManager->updatePreviewInput();
+		
 	}
 
 	void GameManager::Render() {
 		//old frame to clear
 		mGraphics->ClearBackBuffer();
 
-		mTex->Render();
+		//mTex->Render();
 		mTex2->Render();
-		mFontText->Render();
+		//mFontText->Render();
+		mPhys1->Render();
+		mPhys2->Render();
 
 		//draw to screem
 		mGraphics->Render();
@@ -173,21 +179,46 @@ namespace SDLFramework {
 		mAssetManager = AssetManager::Instance();
 		mInputManager = InputManager::Instance();
 		mAudioManager = AudioManager::Instance();
+		mPhysicsManager = PhysicsManager::Instance();
 
+
+		//Create Physics Layers
+		mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::Friendly, 
+			PhysicsManager::CollisionFlags::Hostile | 
+			PhysicsManager::CollisionFlags::HostileProjectile
+		);
+		mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::Hostile,
+			PhysicsManager::CollisionFlags::Friendly |
+			PhysicsManager::CollisionFlags::FriendlyProjectile
+		);
+
+		
 
 		mTex = new Texture("SpriteSheet.png",160,55,16,16);
 		mTex->Scale(Vector2(3,3));
 		mTex->Position(Graphics::SCREEN_WIDTH * 0.4f, Graphics::SCREEN_HEIGHT * 0.5f);
 
 		mTex2 = new AnimatedTexture("SpriteSheet.png", 204, 45, 40, 38, 4, 1,AnimatedTexture::Horizontal);
-		mTex2->Scale(Vector2(3, 3));
+		mTex2->Scale(Vector2(10, 10));
 		mTex2->Position(Graphics::SCREEN_WIDTH * 0.6f, Graphics::SCREEN_HEIGHT * 0.5f);
 
 		mFontText = new Texture("Galaga", "ARCADE.TTF", 72, {225,255,255});
 		mFontText->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.15f);
 
+		//mAudioManager->PlayMusic("Map.wav");
 
-		mAudioManager->PlayMusic("Map.wav");
+
+
+		mPhys1 = new PhysEntity();
+		mPhys1->Position(Vector2(Graphics::SCREEN_WIDTH * 0.5f,Graphics::SCREEN_HEIGHT * 0.5f));
+		mPhys1->AddCollider(new BoxCollider(Vector2(20,20)));
+		mPhys1->mId = mPhysicsManager->RegisterEntity(mPhys1, PhysicsManager::CollisionLayers::Friendly);
+
+		mPhys2 = new PhysEntity();
+		mPhys2->Position(Vector2(Graphics::SCREEN_WIDTH * 0.6f, Graphics::SCREEN_HEIGHT * 0.6f));
+		mPhys2->AddCollider(new BoxCollider(Vector2(50.0f,50.0f)));
+		mPhys2->mId = mPhysicsManager->RegisterEntity(mPhys2, PhysicsManager::CollisionLayers::Hostile);
+
 	}
 
 	GameManager::~GameManager() {
@@ -207,6 +238,9 @@ namespace SDLFramework {
 		AudioManager::Release();
 		mAudioManager = nullptr;
 
+		PhysicsManager::Release();
+		mPhysicsManager = nullptr;
+
 		delete mTex;
 		mTex = nullptr;
 
@@ -215,6 +249,12 @@ namespace SDLFramework {
 
 		delete mFontText;
 		mFontText = nullptr;
+
+		delete mPhys1;
+		mPhys1 = nullptr;
+
+		delete mPhys2;
+		mPhys2 = nullptr;
 
 		//quit sdl subsystems
 		SDL_Quit();

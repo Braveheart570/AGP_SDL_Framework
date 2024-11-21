@@ -3,6 +3,7 @@
 #include "AnimatedTexture.h"
 #include "InputManager.h"
 #include "AudioManager.h"
+#include "PhysicsManager.h"
 
 namespace SDLFramework {
 
@@ -39,6 +40,7 @@ namespace SDLFramework {
 		AssetManager* mAssetManager;
 		InputManager* mInputManager;
 		AudioManager* mAudioManager;
+		PhysicsManager* mPhysicsManager;
 
 
 		SDL_Event mEvents;
@@ -48,6 +50,8 @@ namespace SDLFramework {
 		Texture* mTex;
 		Texture* mTex2;
 		Texture* mFontText;
+		PhysEntity* mPhys1;
+		PhysEntity* mPhys2;
 	};
 
 }

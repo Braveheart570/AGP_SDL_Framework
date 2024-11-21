@@ -14,7 +14,7 @@ namespace SDLFramework {
 
 		bool CheckCollision(PhysEntity* other);
 
-		virtual void Hit(PhysEntity* other);
+		virtual void Hit(PhysEntity* other) { std::cout << "A collision has happened." << std::endl; }
 
 		virtual void Render() override;
 
@@ -24,17 +24,17 @@ namespace SDLFramework {
 
 		virtual bool IgnoreCollisions();
 
-		void AddCollider(Collider* colliderm, Vector2 localPos = Vect2_Zero);
-
-
-		unsigned long int mId;
+		
 
 		std::vector<Collider*> mColliders;
 
 		Collider* mBroadPhaseCollider;
 
 
-
+		//TODO set these back to protected
+	public:
+		void AddCollider(Collider* colliderm, Vector2 localPos = Vect2_Zero);
+		unsigned long int mId;
 	};
 
 }

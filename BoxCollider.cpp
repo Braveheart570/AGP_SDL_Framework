@@ -7,8 +7,8 @@ namespace SDLFramework{
 
 		AddVert(0, Vector2(-0.5f * size.x, -0.5f * size.y));
 		AddVert(1, Vector2(0.5f * size.x, -0.5f * size.y));
-		AddVert(2, Vector2(0.5f * size.x, 0.5f * size.y));
-		AddVert(3, Vector2(-0.5f * size.x, 0.5f * size.y));
+		AddVert(2, Vector2(-0.5f * size.x, 0.5f * size.y));
+		AddVert(3, Vector2(0.5f * size.x, 0.5f * size.y));
 
 		if (DEBUG_COLLIDERS) {
 			SetDebugTexture(new Texture("BoxCollider.png"));
