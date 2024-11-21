@@ -211,12 +211,12 @@ namespace SDLFramework {
 
 		mPhys1 = new PhysEntity();
 		mPhys1->Position(Vector2(Graphics::SCREEN_WIDTH * 0.5f,Graphics::SCREEN_HEIGHT * 0.5f));
-		mPhys1->AddCollider(new BoxCollider(Vector2(20.0f,20.0f)));
+		mPhys1->AddCollider(new BoxCollider(Vector2(30.0f,30.0f)));
 		mPhys1->mId = mPhysicsManager->RegisterEntity(mPhys1, PhysicsManager::CollisionLayers::Friendly);
 
 		mPhys2 = new PhysEntity();
-		mPhys2->Position(Vector2(Graphics::SCREEN_WIDTH * 0.6f, Graphics::SCREEN_HEIGHT * 0.6f));
-		mPhys2->AddCollider(new BoxCollider(Vector2(50.0f,50.0f)));
+		mPhys2->Position(Vector2(Graphics::SCREEN_WIDTH * 0.55f, Graphics::SCREEN_HEIGHT * 0.5f));
+		mPhys2->AddCollider(new BoxCollider(Vector2(30.0f,30.0f)));
 		mPhys2->mId = mPhysicsManager->RegisterEntity(mPhys2, PhysicsManager::CollisionLayers::Hostile);
 
 	}

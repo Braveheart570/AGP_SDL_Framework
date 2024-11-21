@@ -126,7 +126,7 @@ namespace SDLFramework {
 	}
 
 
-	inline bool PointinPolygon(Vector2* verts, int vertCount, const Vector2& point) {
+	inline bool PointInPolygon(Vector2* verts, int vertCount, const Vector2& point) {
 
 		bool retVal = false;
 		
