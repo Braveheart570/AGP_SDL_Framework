@@ -57,6 +57,8 @@ namespace SDLFramework {
 	void GameManager::Update() {
 
 		mInputManager->Update();
+
+		//update code here
 		
 	}
 
@@ -70,6 +72,7 @@ namespace SDLFramework {
 		//old frame to clear
 		mGraphics->ClearBackBuffer();
 
+		//render calls here
 		
 
 		//draw to screem
@@ -109,6 +112,9 @@ namespace SDLFramework {
 			PhysicsManager::CollisionFlags::Hostile |
 			PhysicsManager::CollisionFlags::HostileProjectile
 		);
+
+		//define objects here
+
 
 	}
 
