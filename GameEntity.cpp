@@ -78,8 +78,8 @@ namespace SDLFramework {
 		}
 
 		Vector2 scale = mParent->Scale(WORLD);
-		scale.x *= scale.x;
-		scale.y *= scale.y;
+		scale.x *= mScale.x;
+		scale.y *= mScale.y;
 
 		return scale;
 

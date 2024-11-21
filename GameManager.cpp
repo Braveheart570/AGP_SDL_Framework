@@ -157,7 +157,7 @@ namespace SDLFramework {
 		mGraphics->ClearBackBuffer();
 
 		//mTex->Render();
-		mTex2->Render();
+		//mTex2->Render();
 		//mFontText->Render();
 		mPhys1->Render();
 		mPhys2->Render();
@@ -198,8 +198,8 @@ namespace SDLFramework {
 		mTex->Scale(Vector2(3,3));
 		mTex->Position(Graphics::SCREEN_WIDTH * 0.4f, Graphics::SCREEN_HEIGHT * 0.5f);
 
-		mTex2 = new AnimatedTexture("SpriteSheet.png", 204, 45, 40, 38, 4, 1,AnimatedTexture::Horizontal);
-		mTex2->Scale(Vector2(10, 10));
+		mTex2 = new Texture("BoxCollider.png");
+		mTex2->Scale(Vector2(20, 20));
 		mTex2->Position(Graphics::SCREEN_WIDTH * 0.6f, Graphics::SCREEN_HEIGHT * 0.5f);
 
 		mFontText = new Texture("Galaga", "ARCADE.TTF", 72, {225,255,255});
@@ -211,7 +211,7 @@ namespace SDLFramework {
 
 		mPhys1 = new PhysEntity();
 		mPhys1->Position(Vector2(Graphics::SCREEN_WIDTH * 0.5f,Graphics::SCREEN_HEIGHT * 0.5f));
-		mPhys1->AddCollider(new BoxCollider(Vector2(20,20)));
+		mPhys1->AddCollider(new BoxCollider(Vector2(20.0f,20.0f)));
 		mPhys1->mId = mPhysicsManager->RegisterEntity(mPhys1, PhysicsManager::CollisionLayers::Friendly);
 
 		mPhys2 = new PhysEntity();
