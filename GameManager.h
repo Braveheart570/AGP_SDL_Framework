@@ -4,7 +4,6 @@
 #include "InputManager.h"
 #include "AudioManager.h"
 #include "PhysicsManager.h"
-#include "BoxCollider.h"
 
 namespace SDLFramework {
 
@@ -45,14 +44,6 @@ namespace SDLFramework {
 
 
 		SDL_Event mEvents;
-
-
-		//sanaty testing
-		Texture* mTex;
-		Texture* mTex2;
-		Texture* mFontText;
-		PhysEntity* mPhys1;
-		PhysEntity* mPhys2;
 	};
 
 }

@@ -24,16 +24,14 @@ namespace SDLFramework {
 
 		virtual bool IgnoreCollisions();
 
-		
+		void AddCollider(Collider* colliderm, Vector2 localPos = Vect2_Zero);
+
+
 
 		std::vector<Collider*> mColliders;
 
 		Collider* mBroadPhaseCollider;
 
-
-		//TODO set these back to protected
-	public:
-		void AddCollider(Collider* colliderm, Vector2 localPos = Vect2_Zero);
 		unsigned long int mId;
 	};
 

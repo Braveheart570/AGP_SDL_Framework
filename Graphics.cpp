@@ -109,9 +109,6 @@ namespace SDLFramework {
 			std::cerr << "SDL could not init video: " << SDL_GetError() << std::endl;
 			return -1;
 		}
-		else {
-			std::cout << "Video init sucessfull" << std::endl;
-		}
 
 		//Draw a Window
 		mWindow = SDL_CreateWindow(
