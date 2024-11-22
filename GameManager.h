@@ -48,11 +48,17 @@ namespace SDLFramework {
 
 
 		//sanaty testing
-		Texture* mTex;
-		Texture* mTex2;
-		Texture* mFontText;
 		PhysEntity* mPhys1;
 		PhysEntity* mPhys2;
+		PhysEntity* mPhys3;
+		PhysEntity* mPhys4;
+
+		Texture* mPhys1Tex;
+		Texture* mPhys2Tex;
+		Texture* mPhys3Tex;
+		Texture* mPhys4Tex;
+
+
 	};
 
 }

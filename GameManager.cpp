@@ -59,87 +59,26 @@ namespace SDLFramework {
 
 		mInputManager->Update();
 
-		mTex2->Update();
-
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_W)) {
-			mTex->Translate(Vect2_Up * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+			mPhys1->Translate(Vect2_Up * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
 		}
 		else if(mInputManager->KeyDown(SDL_SCANCODE_S)){
-			mTex->Translate(Vect2_Up * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+			mPhys1->Translate(Vect2_Up * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
 		}
 
 		if (mInputManager->KeyDown(SDL_SCANCODE_A)) {
-			mTex->Translate(Vect2_Right * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+			mPhys1->Translate(Vect2_Right * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
 		}
 		else if (mInputManager->KeyDown(SDL_SCANCODE_D)) {
-			mTex->Translate(Vect2_Right * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
+			mPhys1->Translate(Vect2_Right * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
 		}
 		
 		if (mInputManager->KeyDown(SDL_SCANCODE_Q)) {
-			mTex->Rotate(-2);
+			mPhys1->Rotate(-2);
 		}
 		else if (mInputManager->KeyDown(SDL_SCANCODE_E)) {
-			mTex->Rotate(2);
-		}
-
-		if (mInputManager->KeyDown(SDL_SCANCODE_Z)) {
-			mTex->Scale(mTex->Scale()-= Vect2_One * 80 * mTimer->DeltaTime());
-		}
-		else if (mInputManager->KeyDown(SDL_SCANCODE_C)) {
-			mTex->Scale(mTex->Scale()+= Vect2_One * 80 * mTimer->DeltaTime());
-		}
-
-
-		
-
-		if (mInputManager->KeyDown(SDL_SCANCODE_I)) {
-			mPhys2->Translate(Vect2_Up * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
-		}
-		else if (mInputManager->KeyDown(SDL_SCANCODE_K)) {
-			mPhys2->Translate(Vect2_Up * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
-		}
-
-		if (mInputManager->KeyDown(SDL_SCANCODE_J)) {
-			mPhys2->Translate(Vect2_Right * -80 * mTimer->DeltaTime(), GameEntity::LOCAL);
-		}
-		else if (mInputManager->KeyDown(SDL_SCANCODE_L)) {
-			mPhys2->Translate(Vect2_Right * 80 * mTimer->DeltaTime(), GameEntity::LOCAL);
-		}
-
-		if (mInputManager->KeyDown(SDL_SCANCODE_U)) {
-			mPhys2->Rotate(-80 * mTimer->DeltaTime());
-		}
-		else if (mInputManager->KeyDown(SDL_SCANCODE_O)) {
-			mPhys2->Rotate(80 * mTimer->DeltaTime());
-		}
-
-		if (mInputManager->KeyDown(SDL_SCANCODE_N)) {
-			mPhys2->Scale(mTex2->Scale() -= Vect2_One * 80 * mTimer->DeltaTime());
-		}
-		else if (mInputManager->KeyDown(SDL_SCANCODE_M)) {
-			mPhys2->Scale(mTex2->Scale() += Vect2_One * 80 * mTimer->DeltaTime());
-		}
-
-
-
-
-
-		if (mInputManager->KeyPressed(SDL_SCANCODE_SPACE)) {
-			std::cout << "Space Pressed!" << std::endl;
-			mAudioManager->PlaySFX("coin_credit.wav");
-			mAudioManager->PauseMusic();
-		}
-		if (mInputManager->keyReleased(SDL_SCANCODE_SPACE)) {
-			std::cout << "Space Released!" << std::endl;
-			mAudioManager->ResumeMusic();
-		}
-
-		if (mInputManager->MouseButtonPressed(InputManager::Left)) {
-			std::cout << "LMB Pressed!" << std::endl;
-		}
-		if (mInputManager->MouseButtonReleased(InputManager::Left)) {
-			std::cout << "LMB Released!" << std::endl;
+			mPhys1->Rotate(2);
 		}
 
 
@@ -156,11 +95,15 @@ namespace SDLFramework {
 		//old frame to clear
 		mGraphics->ClearBackBuffer();
 
-		//mTex->Render();
-		//mTex2->Render();
-		//mFontText->Render();
+
 		mPhys1->Render();
+		mPhys1Tex->Render();
 		mPhys2->Render();
+		mPhys2Tex->Render();
+		mPhys3->Render();
+		mPhys3Tex->Render();
+		mPhys4->Render();
+		mPhys4Tex->Render();
 
 		//draw to screem
 		mGraphics->Render();
@@ -191,33 +134,51 @@ namespace SDLFramework {
 			PhysicsManager::CollisionFlags::Friendly |
 			PhysicsManager::CollisionFlags::FriendlyProjectile
 		);
-
-		
-
-		mTex = new Texture("SpriteSheet.png",160,55,16,16);
-		mTex->Scale(Vector2(3,3));
-		mTex->Position(Graphics::SCREEN_WIDTH * 0.4f, Graphics::SCREEN_HEIGHT * 0.5f);
-
-		mTex2 = new Texture("BoxCollider.png");
-		mTex2->Scale(Vector2(20, 20));
-		mTex2->Position(Graphics::SCREEN_WIDTH * 0.6f, Graphics::SCREEN_HEIGHT * 0.5f);
-
-		mFontText = new Texture("Galaga", "ARCADE.TTF", 72, {225,255,255});
-		mFontText->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.15f);
-
-		//mAudioManager->PlayMusic("Map.wav");
+		mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::HostileProjectile,
+			PhysicsManager::CollisionFlags::Friendly
+		);
+		mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::FriendlyProjectile,
+			PhysicsManager::CollisionFlags::Hostile
+		);
 
 
+		const int labelTextSize = 26;
 
 		mPhys1 = new PhysEntity();
-		mPhys1->Position(Vector2(Graphics::SCREEN_WIDTH * 0.5f,Graphics::SCREEN_HEIGHT * 0.5f));
+		mPhys1->Position(Vector2(Graphics::SCREEN_WIDTH * 0.3f,Graphics::SCREEN_HEIGHT * 0.3f));
 		mPhys1->AddCollider(new BoxCollider(Vector2(30.0f,30.0f)));
 		mPhys1->mId = mPhysicsManager->RegisterEntity(mPhys1, PhysicsManager::CollisionLayers::Friendly);
 
+		mPhys1Tex = new Texture("Friendly", "ARCADE.TTF", labelTextSize, {255,255,255});
+		mPhys1Tex->Parent(mPhys1);
+		mPhys1Tex->Position(Vect2_Zero);
+
 		mPhys2 = new PhysEntity();
-		mPhys2->Position(Vector2(Graphics::SCREEN_WIDTH * 0.55f, Graphics::SCREEN_HEIGHT * 0.5f));
+		mPhys2->Position(Vector2(Graphics::SCREEN_WIDTH * 0.7f, Graphics::SCREEN_HEIGHT * 0.3f));
 		mPhys2->AddCollider(new BoxCollider(Vector2(30.0f,30.0f)));
 		mPhys2->mId = mPhysicsManager->RegisterEntity(mPhys2, PhysicsManager::CollisionLayers::Hostile);
+
+		mPhys2Tex = new Texture("Hostile", "ARCADE.TTF", labelTextSize, { 255,255,255 });
+		mPhys2Tex->Parent(mPhys2);
+		mPhys2Tex->Position(Vect2_Zero);
+
+		mPhys3 = new PhysEntity();
+		mPhys3->Position(Vector2(Graphics::SCREEN_WIDTH * 0.7f, Graphics::SCREEN_HEIGHT * 0.7f));
+		mPhys3->AddCollider(new BoxCollider(Vector2(30.0f, 30.0f)));
+		mPhys3->mId = mPhysicsManager->RegisterEntity(mPhys3, PhysicsManager::CollisionLayers::HostileProjectile);
+
+		mPhys3Tex = new Texture("HostileProjectile", "ARCADE.TTF", labelTextSize, { 255,255,255 });
+		mPhys3Tex->Parent(mPhys3);
+		mPhys3Tex->Position(Vect2_Zero);
+
+		mPhys4 = new PhysEntity();
+		mPhys4->Position(Vector2(Graphics::SCREEN_WIDTH * 0.3f, Graphics::SCREEN_HEIGHT * 0.7f));
+		mPhys4->AddCollider(new BoxCollider(Vector2(30.0f, 30.0f)));
+		mPhys4->mId = mPhysicsManager->RegisterEntity(mPhys4, PhysicsManager::CollisionLayers::FriendlyProjectile);
+
+		mPhys4Tex = new Texture("FriendlyProjectile", "ARCADE.TTF", labelTextSize, { 255,255,255 });
+		mPhys4Tex->Parent(mPhys4);
+		mPhys4Tex->Position(Vect2_Zero);
 
 	}
 
@@ -241,20 +202,29 @@ namespace SDLFramework {
 		PhysicsManager::Release();
 		mPhysicsManager = nullptr;
 
-		delete mTex;
-		mTex = nullptr;
-
-		delete mTex2;
-		mTex2 = nullptr;
-
-		delete mFontText;
-		mFontText = nullptr;
+		
 
 		delete mPhys1;
 		mPhys1 = nullptr;
+		delete mPhys1Tex;
+		mPhys1Tex = nullptr;
 
 		delete mPhys2;
 		mPhys2 = nullptr;
+		delete mPhys2Tex;
+		mPhys2Tex = nullptr;
+
+		delete mPhys3;
+		mPhys3 = nullptr;
+		delete mPhys3Tex;
+		mPhys3Tex = nullptr;
+
+		delete mPhys4;
+		mPhys4 = nullptr;
+		delete mPhys4Tex;
+		mPhys4Tex = nullptr;
+
+
 
 		//quit sdl subsystems
 		SDL_Quit();
